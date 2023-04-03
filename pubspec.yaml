@@ -10,24 +10,24 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  flutter_svg: ^1.1.6
-  fluttertoast: ^8.1.2
-  lottie: ^2.1.0
+  cupertino_icons: ^1.0.5
+  flutter_svg: ^2.0.4
+  fluttertoast: ^8.2.1
+  lottie: ^2.3.1
 
   get: ^4.6.5
-  get_storage: ^2.0.3
+  get_storage: ^2.1.1
 
   http: ^0.13.5
-  dio: ^4.0.6
+  dio: ^5.1.1
   cookie_jar: ^3.0.1
-  dio_cookie_manager: ^2.0.0
-  connectivity_plus: ^3.0.2
+  dio_cookie_manager: ^2.1.4
+  connectivity_plus: ^3.0.3
 
   intl: ^0.18.0
   crypto: ^3.0.2
-  url_launcher: ^6.1.7
-  image_picker: ^0.8.6
+  url_launcher: ^6.1.10
+  image_picker: ^0.8.7+1
 
   bitsdojo_window: ^0.1.5
 
@@ -35,7 +35,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
 
 flutter:
   uses-material-design: true
