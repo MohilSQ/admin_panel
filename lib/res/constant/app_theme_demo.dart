@@ -64,10 +64,9 @@ class AppTheme {
 final ThemeData baseLight = ThemeData.light();
 final ThemeData baseDark = ThemeData.dark();
 
-/* ===================> Custom TextStyle <================== */
+
 
 TextTheme buildTextTheme(TextTheme base) {
-// ======Font=Family=======> Poppins <=======Font=Family====== //
 
   return base.copyWith(
     /// Body Text

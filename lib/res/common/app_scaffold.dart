@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppScaffold extends StatelessWidget {
   final Widget child;
+
   const AppScaffold({Key? key, required this.child}) : super(key: key);
 
   @override
@@ -11,7 +12,12 @@ class AppScaffold extends StatelessWidget {
       body: Column(
         children: [
           WindowTitleBarBox(
-            child: MoveWindow(),
+            child: Container(
+              color: Colors.teal,
+              child: MoveWindow(
+                  // onDoubleTap: () => appWindow.maximizeOrRestore(),
+                  ),
+            ),
           ),
           child,
           // Expanded(

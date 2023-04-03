@@ -1,15 +1,12 @@
-
-
-import 'package:admin_panel/data/network/api_class.dart';
+import 'package:admin_panel/data/API/api_class.dart';
 import 'package:admin_panel/res/constant/app_strings.dart';
 import 'package:admin_panel/utils/color_print.dart';
 import 'package:admin_panel/utils/utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-
 import 'package:flutter/services.dart';
 
 class APIFunction {
-  /// ------ To Check Internet Aviblity -------------------->>>
+  /// ------ To Check Internet Availability -------------------->>>
   ConnectivityResult? connectivityResult;
   final Connectivity connectivity = Connectivity();
   Future<bool> getConnectivityResult() async {
@@ -19,12 +16,12 @@ class APIFunction {
       if (connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.mobile) {
         return true;
       } else {
-        Utils.showSnackBar( message: AppStrings.noInternetAvailable);
+        Utils.showSnackBar(message: AppStrings.noInternetAvailable);
         return false;
       }
     } on PlatformException catch (e) {
       printError(e.toString());
-      Utils.showSnackBar( message: AppStrings.noInternetAvailable);
+      Utils.showSnackBar(message: AppStrings.noInternetAvailable);
       return false;
     }
   }

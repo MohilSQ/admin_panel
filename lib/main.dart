@@ -1,4 +1,3 @@
-import 'package:admin_panel/res/constant/app_theme.dart';
 import 'package:admin_panel/res/constant/constant.dart';
 import 'package:admin_panel/utils/routes/routes.dart';
 import 'package:admin_panel/utils/routes/routes_name.dart';
@@ -27,9 +26,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      // theme: AppTheme.lightTheme,
+      // darkTheme: AppTheme.darkTheme,
+      // themeMode: ThemeMode.light,
+      themeMode: themeMode,
+      theme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: useMaterial3,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: useMaterial3,
+        brightness: Brightness.dark,
+      ),
       title: appName,
       getPages: Routes.pages,
       initialRoute: RoutesName.splashScreen,

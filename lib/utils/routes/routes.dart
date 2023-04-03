@@ -5,9 +5,19 @@ import 'package:admin_panel/view/splash/splash_binding.dart';
 import 'package:admin_panel/view/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
+GetPage getPage({String? name, GetPageBuilder? page, Bindings? binding}) {
+  return GetPage(
+    name: name!,
+    page: page!,
+    binding: binding,
+    transition: Transition.fadeIn,
+    transitionDuration: const Duration(milliseconds: 1000),
+  );
+}
+
 class Routes {
   static List<GetPage> pages = [
-    GetPage(name: RoutesName.splashScreen, page: () => const SplashScreen(), binding: SplashBinding()),
-    GetPage(name: RoutesName.loginScreen, page: () => const LoginScreen(), binding: LoginBinding()),
+    getPage(name: RoutesName.splashScreen, page: () => const SplashScreen(), binding: SplashBinding()),
+    getPage(name: RoutesName.loginScreen, page: () => const LoginScreen(), binding: LoginBinding()),
   ];
 }
