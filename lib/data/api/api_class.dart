@@ -1,57 +1,54 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:admin_panel/utils/color_print.dart';
+
+import 'package:admin_panel/res/constant/app_strings.dart';
 import 'package:admin_panel/res/constant/constant.dart';
 import 'package:admin_panel/utils/utils.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:flutter/material.dart';
+
+import '../../utils/color_print.dart';
 
 class HttpUtil {
   factory HttpUtil() => _instance();
 
   static HttpUtil _instance() => HttpUtil._internal();
 
-  late Dio dio;
+  Dio? dio;
   CancelToken cancelToken = CancelToken();
-  String apiUrl =  baseUrl;
-  BuildContext? context;
 
   HttpUtil._internal() {
-    BaseOptions options = BaseOptions(
-      baseUrl: apiUrl,
-      connectTimeout: 10000,
-      receiveTimeout: 10000,
-      contentType: 'application/json; charset=utf-8',
-      responseType: ResponseType.json,
+    dio = Dio(
+      BaseOptions(
+        baseUrl: Constant.baseUrl,
+        connectTimeout: const Duration(seconds: 6),
+        receiveTimeout: const Duration(seconds: 6),
+        contentType: 'application/json; charset=utf-8',
+        responseType: ResponseType.json,
+      ),
     );
 
-    dio = Dio(options);
-    CookieJar cookieJar = CookieJar();
-    dio.interceptors.add(CookieManager(cookieJar));
-
-    dio.interceptors.add(LogInterceptor(
-      request: true,
-      requestBody: true,
-      responseBody: true,
-    ));
-
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        return handler.next(options); //continue
-      },
-      onResponse: (response, handler) {
-        return handler.next(response); // continue
-      },
-      onError: (DioError e, handler) {
-        onError(createErrorEntity(e));
-        return handler.next(e); //continue
-      },
-    ));
+    dio!.interceptors.addAll([
+      LogInterceptor(
+        request: true,
+        requestBody: true,
+        responseBody: true,
+      ),
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          return handler.next(options); //continue
+        },
+        onResponse: (response, handler) {
+          return handler.next(response); // continue
+        },
+        onError: (DioError e, handler) {
+          onError(createErrorEntity(e));
+          return handler.next(e); //continue
+        },
+      ),
+    ]);
   }
 
-// On Error....
+  /// On Error....
   void onError(ErrorEntity eInfo) {
     printError("error.code -> ${eInfo.code}, error.message -> ${eInfo.message}");
     if (eInfo.message.isNotEmpty) {
@@ -59,55 +56,60 @@ class HttpUtil {
     }
   }
 
+  /// Network and Server Error ....
   ErrorEntity createErrorEntity(DioError error) {
     switch (error.type) {
-      case DioErrorType.cancel:
-        return ErrorEntity(code: -1, message: "Request to server was cancelled");
-      case DioErrorType.connectTimeout:
-        return ErrorEntity(code: -2, message: "Connection timeout with server");
+      case DioErrorType.connectionTimeout:
+        return ErrorEntity(code: 01, message: 'Connection timeout.');
       case DioErrorType.sendTimeout:
-        return ErrorEntity(code: -3, message: "Send timeout in connection with server");
+        return ErrorEntity(code: 02, message: 'Request send timeout.');
       case DioErrorType.receiveTimeout:
-        return ErrorEntity(code: -4, message: "Receive timeout in connection with server");
-      case DioErrorType.response:
-        {
-          try {
-            int errCode = error.response != null ? error.response!.statusCode! : 00;
-            switch (errCode) {
-              case 400:
-                return ErrorEntity(code: errCode, message: "Request syntax error");
-              case 401:
-                return ErrorEntity(code: errCode, message: "Permission denied");
-              case 403:
-                return ErrorEntity(code: errCode, message: "Server refuses to execute");
-              case 404:
-                return ErrorEntity(code: errCode, message: "Can not reach server");
-              case 405:
-                return ErrorEntity(code: errCode, message: "Request method is forbidden");
-              case 500:
-                return ErrorEntity(code: errCode, message: "Internal server error");
-              case 502:
-                return ErrorEntity(code: errCode, message: "Invalid request");
-              case 503:
-                return ErrorEntity(code: errCode, message: "Server hangs");
-              case 505:
-                return ErrorEntity(code: errCode, message: "HTTP protocol requests are not supported");
-              default:
-                return ErrorEntity(code: errCode, message: error.response != null ? error.response!.data! : "");
-            }
-          } on Exception catch (_) {
-            return ErrorEntity(code: 00, message: "Unknown mistake");
-          }
+        return ErrorEntity(code: 03, message: 'Receiving timeout occurred.');
+      case DioErrorType.cancel:
+        return ErrorEntity(code: 04, message: 'Request to the server was cancelled.');
+      case DioErrorType.connectionError:
+        return ErrorEntity(code: 05, message: error.message!);
+      case DioErrorType.badResponse:
+        return handleStatusCode(error.response!.statusCode);
+      case DioErrorType.unknown:
+        if (error.message!.contains('SocketException')) {
+          return ErrorEntity(code: 06, message: AppStrings.noInternetAvailable);
         }
-      case DioErrorType.other:
-        if (error.message.contains("SocketException")) {
-          return ErrorEntity(code: -5, message: "Your internet is not available, please try again later");
-        } else if (error.message.contains("Software caused connection abort")) {
-          return ErrorEntity(code: -6, message: "Your internet is not available, please try again later");
-        }
-        return ErrorEntity(code: -7, message: "Oops something went wrong");
+        return ErrorEntity(code: 07, message: "Unexpected error occurred.");
       default:
-        return ErrorEntity(code: -8, message: "Oops something went wrong");
+        return ErrorEntity(code: 00, message: "Something went wrong");
+    }
+  }
+
+  /// Api Error ....
+  ErrorEntity handleStatusCode(int? statusCode) {
+    switch (statusCode) {
+      case 400:
+        return ErrorEntity(code: statusCode!, message: 'Bad request.');
+      case 401:
+        return ErrorEntity(code: statusCode!, message: 'Authentication failed.');
+      case 403:
+        return ErrorEntity(code: statusCode!, message: 'The authenticated user is not allowed to access the specified API endpoint.');
+      case 404:
+        return ErrorEntity(code: statusCode!, message: 'The requested resource does not exist.');
+      case 405:
+        return ErrorEntity(code: statusCode!, message: 'Method not allowed. Please check the Allow header for the allowed HTTP methods.');
+      case 415:
+        return ErrorEntity(code: statusCode!, message: 'Unsupported media type. The requested content type or version number is invalid.');
+      case 422:
+        return ErrorEntity(code: statusCode!, message: 'Data validation failed.');
+      case 429:
+        return ErrorEntity(code: statusCode!, message: 'Too many requests.');
+      case 500:
+        return ErrorEntity(code: statusCode!, message: 'Internal server error.');
+      case 502:
+        return ErrorEntity(code: statusCode!, message: "Invalid request");
+      case 503:
+        return ErrorEntity(code: statusCode!, message: "Server hangs");
+      case 505:
+        return ErrorEntity(code: statusCode!, message: "HTTP protocol requests are not supported");
+      default:
+        return ErrorEntity(code: 00, message: 'Oops something went wrong!');
     }
   }
 
@@ -136,7 +138,7 @@ class HttpUtil {
       "cacheDisk": cacheDisk,
     });
 
-    var response = await dio.get(
+    var response = await dio!.get(
       path,
       queryParameters: queryParameters,
       options: options,
@@ -155,7 +157,7 @@ class HttpUtil {
   }) async {
     Options requestOptions = options ?? Options();
 
-    var response = await dio.post(
+    var response = await dio!.post(
       path,
       data: isFromData! ? data : json.encode(data),
       queryParameters: queryParameters,
@@ -174,7 +176,7 @@ class HttpUtil {
   }) async {
     Options requestOptions = options ?? Options();
 
-    var response = await dio.put(
+    var response = await dio!.put(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -193,7 +195,7 @@ class HttpUtil {
   }) async {
     Options requestOptions = options ?? Options();
 
-    var response = await dio.delete(
+    var response = await dio!.delete(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -212,7 +214,7 @@ class HttpUtil {
   }) async {
     Options requestOptions = options ?? Options();
 
-    var response = await dio.patch(
+    var response = await dio!.patch(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -231,7 +233,7 @@ class HttpUtil {
   }) async {
     Options requestOptions = options ?? Options();
 
-    var response = await dio.post(
+    var response = await dio!.post(
       path,
       data: data,
       queryParameters: queryParameters,
@@ -254,7 +256,7 @@ class HttpUtil {
     requestOptions.headers!.addAll({
       Headers.contentLengthHeader: dataLength.toString(),
     });
-    var response = await dio.post(
+    var response = await dio!.post(
       path,
       data: Stream.fromIterable(data.map((e) => [e])),
       queryParameters: queryParameters,
@@ -266,10 +268,13 @@ class HttpUtil {
 }
 
 class ErrorEntity implements Exception {
-  int code = -1;
+  int code = 00;
   String message = "";
 
-  ErrorEntity({required this.code, required this.message});
+  ErrorEntity({
+    required this.code,
+    required this.message,
+  });
 
   @override
   String toString() {

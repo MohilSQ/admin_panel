@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -45,7 +44,7 @@ Future<void> commonDialog({
             Divider(height: 0, color: Theme.of(context).primaryColor.withOpacity(0.7)),
             Padding(
               padding: const EdgeInsets.all(15.0 / 1.3),
-              child: onlyMessDialog == false
+              child: !onlyMessDialog!
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

@@ -1,9 +1,3 @@
-enum Status {
-  loading,
-  completed,
-  error,
-}
-
 class ApiResponse<T> {
   Status? status;
   T? data;
@@ -21,4 +15,10 @@ class ApiResponse<T> {
   String toString() {
     return "Status: $status \n Message:$message \n Data: $data";
   }
+}
+
+enum Status {
+  loading,
+  completed,
+  error,
 }

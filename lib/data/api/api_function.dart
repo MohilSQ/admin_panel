@@ -1,4 +1,4 @@
-import 'package:admin_panel/data/API/api_class.dart';
+import 'package:admin_panel/data/api/api_class.dart';
 import 'package:admin_panel/res/constant/app_strings.dart';
 import 'package:admin_panel/utils/color_print.dart';
 import 'package:admin_panel/utils/utils.dart';
@@ -6,9 +6,10 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 
 class APIFunction {
-  /// ------ To Check Internet Availability -------------------->>>
+  /// <<< To Check Internet Availability ------------------- >>>
   ConnectivityResult? connectivityResult;
   final Connectivity connectivity = Connectivity();
+
   Future<bool> getConnectivityResult() async {
     try {
       connectivityResult = await connectivity.checkConnectivity();
@@ -26,7 +27,7 @@ class APIFunction {
     }
   }
 
-  /// ------ To Call Post Api -------------------->>>
+  /// <<< To Call Post Api ------------------- >>>
   Future<dynamic> postApiCall({
     required String apiName,
     dynamic params,
@@ -43,7 +44,7 @@ class APIFunction {
     }
   }
 
-  /// ------ To Call Get Api -------------------->>>
+  /// <<< To Call Get Api ------------------- >>>
   Future<dynamic> getApiCall({
     required String apiName,
     dynamic queryParameters,

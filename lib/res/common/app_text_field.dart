@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// <<< Common TextField --------- >>>
+
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool? obscureText;

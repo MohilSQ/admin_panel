@@ -12,11 +12,8 @@ class AppScaffold extends StatelessWidget {
       body: Column(
         children: [
           WindowTitleBarBox(
-            child: Container(
-              color: Colors.teal,
-              child: MoveWindow(
-                  // onDoubleTap: () => appWindow.maximizeOrRestore(),
-                  ),
+            child: MoveWindow(
+              onDoubleTap: () => appWindow.maximizeOrRestore(),
             ),
           ),
           child,
