@@ -9,7 +9,7 @@ class SplashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     Future.delayed(const Duration(milliseconds: 2500), () => animationStart.value = false);
-    Future.delayed(const Duration(seconds: 3), () => Get.toNamed(RoutesName.loginScreen));
+    Future.delayed(const Duration(milliseconds: 3100), () => Get.toNamed(RoutesName.loginScreen));
     super.onInit();
   }
 }

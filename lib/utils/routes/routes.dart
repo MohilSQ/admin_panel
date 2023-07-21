@@ -10,7 +10,7 @@ GetPage getPage({String? name, GetPageBuilder? page, Bindings? binding}) {
     name: name!,
     page: page!,
     binding: binding,
-    transition: Transition.fadeIn,
+    transition: Transition.fade,
     transitionDuration: const Duration(milliseconds: 1000),
   );
 }

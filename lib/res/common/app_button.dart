@@ -1,4 +1,6 @@
+import 'package:admin_panel/res/constant/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +16,8 @@ class AppButton extends StatelessWidget {
   final Widget? child;
   final IconData? icon;
   final String? image;
+  final Color? backGroundColor;
+  final Color? textColor;
 
   const AppButton({
     super.key,
@@ -26,6 +30,8 @@ class AppButton extends StatelessWidget {
     this.child,
     this.icon,
     this.image = "",
+    this.backGroundColor,
+    this.textColor,
   });
 
   @override
@@ -34,7 +40,9 @@ class AppButton extends StatelessWidget {
       onPressed: disableButton! ? null : onPressed,
       onLongPress: disableButton! ? null : onLongPress,
       style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-            fixedSize: MaterialStatePropertyAll(Size(width ?? Get.width, height ?? 54)),
+            fixedSize: MaterialStatePropertyAll(Size(width ?? Get.width, height ?? 40.h)),
+            backgroundColor: MaterialStatePropertyAll(backGroundColor ?? AppColors.buttonBlueColor),
+            overlayColor: MaterialStatePropertyAll(backGroundColor ?? AppColors.buttonBlueColor),
           ),
       child: child ??
           Row(
@@ -64,6 +72,11 @@ class AppButton extends StatelessWidget {
                 Text(
                   title!,
                   textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.sp,
+                        color: textColor,
+                      ),
                 )
             ],
           ),

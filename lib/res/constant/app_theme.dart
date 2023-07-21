@@ -60,7 +60,7 @@ class AppTheme {
 
     /// Note: uncomment if you using copyWith theme or it will throw error.
     // primaryColor: AppColors.primaryColor,
-    // colorScheme: const ColorScheme(
+    // colorScheme: const ColorScheme.light().copyWith(
     //   brightness: Brightness.light,
     //   primary: AppColors.primaryColor,
     //   secondary: AppColors.secondaryColor,
@@ -92,7 +92,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(AppColors.buttonBlueColor),
-        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10).r)),
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.h))),
       ),
     ),
 
@@ -116,9 +116,7 @@ class AppTheme {
     // dropdownMenuTheme: ,
 
     /// Dialog Box
-    dialogTheme: const DialogTheme(
-      backgroundColor: AppColors.sideBarGreyColor,
-    ),
+    dialogTheme: const DialogTheme(backgroundColor: AppColors.sideBarGreyColor),
     // dialogBackgroundColor: ,
 
     /// Note: uncomment if you using copyWith theme or it will throw error.
@@ -136,29 +134,29 @@ class AppTheme {
 TextTheme buildTextTheme(TextTheme base) {
   return TextTheme(
     /// Body Text
-    bodySmall: GoogleFonts.poppins(textStyle: base.bodySmall!.copyWith(fontSize: 12.sp, height: 1.33, color: AppColors.white100)),
-    bodyMedium: GoogleFonts.poppins(textStyle: base.bodyMedium!.copyWith(fontSize: 14.sp, height: 1.43, color: AppColors.white100)),
-    bodyLarge: GoogleFonts.poppins(textStyle: base.bodyLarge!.copyWith(fontSize: 16.sp, height: 1.5, color: AppColors.white100)),
+    bodySmall: GoogleFonts.poppins(textStyle: base.bodySmall!.copyWith(fontSize: 12.sp, color: AppColors.white100)),
+    bodyMedium: GoogleFonts.poppins(textStyle: base.bodyMedium!.copyWith(fontSize: 14.sp, color: AppColors.white100)),
+    bodyLarge: GoogleFonts.poppins(textStyle: base.bodyLarge!.copyWith(fontSize: 16.sp, color: AppColors.white100)),
 
     /// Label Text
-    labelSmall: GoogleFonts.poppins(textStyle: base.labelSmall!.copyWith(fontSize: 11.sp, height: 1.45, color: AppColors.white100)),
-    labelMedium: GoogleFonts.poppins(textStyle: base.labelMedium!.copyWith(fontSize: 12.sp, height: 1.33, color: AppColors.white100)),
-    labelLarge: GoogleFonts.poppins(textStyle: base.labelLarge!.copyWith(fontSize: 14.sp, height: 1.43, color: AppColors.white100)),
+    labelSmall: GoogleFonts.poppins(textStyle: base.labelSmall!.copyWith(fontSize: 11.sp, color: AppColors.white100)),
+    labelMedium: GoogleFonts.poppins(textStyle: base.labelMedium!.copyWith(fontSize: 12.sp, color: AppColors.white100)),
+    labelLarge: GoogleFonts.poppins(textStyle: base.labelLarge!.copyWith(fontSize: 14.sp, color: AppColors.white100)),
 
     /// Title Text
-    titleSmall: GoogleFonts.poppins(textStyle: base.titleSmall!.copyWith(fontSize: 14.sp, height: 1.43, color: AppColors.white100)),
-    titleMedium: GoogleFonts.poppins(textStyle: base.titleMedium!.copyWith(fontSize: 16.sp, height: 1.5, color: AppColors.white100)),
-    titleLarge: GoogleFonts.poppins(textStyle: base.titleLarge!.copyWith(fontSize: 22.sp, height: 1.27, color: AppColors.white100)),
+    titleSmall: GoogleFonts.poppins(textStyle: base.titleSmall!.copyWith(fontSize: 14.sp, color: AppColors.white100)),
+    titleMedium: GoogleFonts.poppins(textStyle: base.titleMedium!.copyWith(fontSize: 16.sp, color: AppColors.white100)),
+    titleLarge: GoogleFonts.poppins(textStyle: base.titleLarge!.copyWith(fontSize: 22.sp, color: AppColors.white100)),
 
     /// Headline Text
-    headlineSmall: GoogleFonts.poppins(textStyle: base.headlineSmall!.copyWith(fontSize: 24.sp, height: 1.33, color: AppColors.white100)),
-    headlineMedium: GoogleFonts.poppins(textStyle: base.headlineMedium!.copyWith(fontSize: 28.sp, height: 1.29, color: AppColors.white100)),
-    headlineLarge: GoogleFonts.poppins(textStyle: base.headlineLarge!.copyWith(fontSize: 32.sp, height: 1.25, color: AppColors.white100)),
+    headlineSmall: GoogleFonts.poppins(textStyle: base.headlineSmall!.copyWith(fontSize: 24.sp, color: AppColors.white100)),
+    headlineMedium: GoogleFonts.poppins(textStyle: base.headlineMedium!.copyWith(fontSize: 28.sp, color: AppColors.white100)),
+    headlineLarge: GoogleFonts.poppins(textStyle: base.headlineLarge!.copyWith(fontSize: 32.sp, color: AppColors.white100)),
 
     /// Display Text
-    displaySmall: GoogleFonts.poppins(textStyle: base.displaySmall!.copyWith(fontSize: 36.sp, height: 1.22, color: AppColors.white100)),
-    displayMedium: GoogleFonts.poppins(textStyle: base.displayMedium!.copyWith(fontSize: 45.sp, height: 1.16, color: AppColors.white100)),
-    displayLarge: GoogleFonts.poppins(textStyle: base.displayLarge!.copyWith(fontSize: 57.sp, height: 1.12, color: AppColors.white100)),
+    displaySmall: GoogleFonts.poppins(textStyle: base.displaySmall!.copyWith(fontSize: 36.sp, color: AppColors.white100)),
+    displayMedium: GoogleFonts.poppins(textStyle: base.displayMedium!.copyWith(fontSize: 45.sp, color: AppColors.white100)),
+    displayLarge: GoogleFonts.poppins(textStyle: base.displayLarge!.copyWith(fontSize: 57.sp, color: AppColors.white100)),
   );
 }
 
