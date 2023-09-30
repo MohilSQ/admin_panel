@@ -3,14 +3,10 @@ import 'package:admin_panel/res/common/app_scaffold.dart';
 import 'package:admin_panel/res/common/app_text_field.dart';
 import 'package:admin_panel/res/constant/app_assets.dart';
 import 'package:admin_panel/res/constant/app_colors.dart';
-import 'package:admin_panel/utils/color_print.dart';
 import 'package:admin_panel/view/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../../res/components/dropdown_below.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);
@@ -45,42 +41,6 @@ class LoginScreen extends GetView<LoginController> {
                     "Sign In",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600, fontSize: 20.sp),
                   ),
-                  15.verticalSpace,
-                  Obx(() {
-                    return DropdownBelow(
-                      itemWidth: 0.28.sw,
-                      itemTextstyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 12.sp),
-                      dropdownColor: AppColors.sideBarGreyColor,
-                      boxTextstyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 12.sp),
-                      boxWidth: double.infinity,
-                      boxHeight: 40.h,
-                      isDense: true,
-                      onBoxStateChanged: (value) {
-                        printAction("Print Value --> $value");
-                      },
-                      boxPadding: EdgeInsets.symmetric(horizontal: 16.w).copyWith(right: 14.w),
-                      boxDecoration: BoxDecoration(
-                        color: Colors.transparent,
-                        border: Border.all(width: 1, color: AppColors.textGrayColor),
-                        borderRadius: BorderRadius.circular(6.r),
-                      ),
-                      icon: SvgPicture.asset(AppAssets.downArrow),
-                      hint: const Text('Select Role'),
-                      value: controller.selectedTest!.value,
-                      items: controller.testList
-                          .map(
-                            (value) => DropdownMenuItem(
-                              value: value["id"],
-                              child: Text(value['type']),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) {
-                        debugPrint("Value --> $value");
-                        // controller.selectedTest!.value = value;
-                      },
-                    );
-                  }),
                   15.verticalSpace,
                   AppTextField(
                     controller: controller.userNameController,
